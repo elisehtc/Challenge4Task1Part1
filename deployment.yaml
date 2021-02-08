@@ -32,7 +32,7 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-persistent-storage
+        - name: mysql-db-volume
           mountPath: /var/lib/mysql
           
       - image: wordpress:latest
@@ -52,6 +52,7 @@ spec:
           name: wordpress-http
       
       volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pvc
+      - name: mysql-db-volume
+        hostPath:
+          path: /var/lib/mysql
+          type: DirectoryOrCreate
